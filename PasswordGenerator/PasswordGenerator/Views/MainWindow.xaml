@@ -5,14 +5,16 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:PasswordGenerator.ViewModels"
+        xmlns:views="clr-namespace:PasswordGenerator.Views"
         Title="Password Generator"
         Width="1130"
-        Height="630"
+        Height="1000"
         d:DataContext="{d:DesignInstance Type=vm:MainWindowViewModel,
                                          IsDesignTimeCreatable=False}"
         FontFamily="Consolas"
         ResizeMode="CanMinimize"
         Style="{StaticResource MaterialDesignWindow}"
+        WindowStartupLocation="CenterScreen"
         mc:Ignorable="d">
   <Grid>
     <Grid.RowDefinitions>
@@ -31,13 +33,13 @@
            Grid.ColumnSpan="2"
            Margin="0,20,0,20"
            HorizontalAlignment="Center"
-           Content="Password Generator"
+           Content="Passwort Generator"
            FontSize="32"
            FontWeight="Bold"/>
 
     <StackPanel Grid.Row="1"
                 Grid.Column="0"
-                Margin="20,20,60,20"
+                Margin="20,0,60,20"
                 Orientation="Vertical">
       <Label Margin="0,0,0,15"
              Content="Passwort Kriterien"
@@ -94,18 +96,19 @@
                 IsChecked="{Binding IsSettingsSave, UpdateSourceTrigger=PropertyChanged}" />
 
     </StackPanel>
+    <StackPanel Grid.Row="1"
+    Grid.Column="1"
+    Margin="0,0,10,0">
 
-    <Border Grid.Row="1"
-            Grid.Column="1"
-            Margin="0,0,10,20"
+    <Border 
             BorderBrush="{StaticResource MaterialDesignLightSeparatorBackground}"
             BorderThickness="2"
             CornerRadius="20">
-      <StackPanel>
+      <StackPanel Height="427">
 
         <Label Margin="0,0,0,20"
                HorizontalAlignment="Left"
-               Content="Generated Passwords:"
+               Content="Generierte Passwörter:"
                FontSize="24"
                FontWeight="Bold"
                Foreground="{StaticResource MaterialDesignLightSeparatorBackground}" />
@@ -113,28 +116,32 @@
         <ListView MaxHeight="350"
                   FontSize="16"
                   ItemsSource="{Binding PasswordItems}"
-                  SelectedItem="{Binding SelectedPasswordItem}"
-                  />
-        <Button Width="550"
-                Margin="0,30,0,0"
-                Command="{Binding CopyToClipBoardCommand}"
-                Visibility="{Binding IsItemSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
-          <Button.Content>
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-              <materialDesign:PackIcon Kind="Clipboard" />
-              <TextBlock Margin="20,0,20,0" Text="Copy To Clipboard" />
-              <materialDesign:PackIcon Kind="Clipboard" />
-            </StackPanel>
-          </Button.Content>
-        </Button>
+                  SelectedItem="{Binding SelectedPasswordItem}"/>
       </StackPanel>
     </Border>
-
+      <Button Width="550"
+              Margin="0,20,0,0"
+              Command="{Binding CopyToClipBoardCommand}"
+              Visibility="{Binding IsItemSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Button.Content>
+          <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+            <materialDesign:PackIcon Kind="Clipboard" />
+            <TextBlock Margin="20,0,20,0" Text="In die Zwischenablage kopieren" />
+            <materialDesign:PackIcon Kind="Clipboard" />
+          </StackPanel>
+        </Button.Content>
+      </Button>
+    </StackPanel>
     <materialDesign:Snackbar Grid.Row="0"
                              Grid.RowSpan="3"
                              Grid.Column="1"
                              HorizontalAlignment="Center"
                              VerticalAlignment="Center"
                              MessageQueue="{Binding MessageQueue}" />
+
+    <ContentControl Grid.Column="0" 
+                               Grid.ColumnSpan="2"
+                               Grid.Row="2"
+                               Content="{Binding TestView}"/>
   </Grid>
 </Window>

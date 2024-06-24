@@ -1,4 +1,15 @@
-﻿using System.ComponentModel;
+﻿/*
+ * -----------------------------------------------------------------------------
+ *	 
+ *   Filename		:   MainWindow.xaml.cs
+ *   Date			:   2024-06-21
+ *   All rights reserved
+ * 
+ * -----------------------------------------------------------------------------
+ * @author Patrick Robin <support@rietrob.de>
+ */
+
+using System.ComponentModel;
 using System.Windows.Input;
 
 using PasswordGenerator.ViewModels;
@@ -13,7 +24,7 @@ public partial class MainWindow
     public MainWindow(MainWindowViewModel viewModel)
     {
         _viewModel = viewModel;
-        DataContext = viewModel;
+        DataContext = _viewModel;
         InitializeComponent();
 
         CommandBindings.Add(new CommandBinding(ApplicationCommands.Close, OnClose));
@@ -23,7 +34,7 @@ public partial class MainWindow
 
     protected override void OnClosing(CancelEventArgs e)
     {
-        if (_viewModel.IsSettingsSave)
+        if (_viewModel != null && _viewModel.IsSettingsSave)
         {
             _viewModel.SaveSettingsCommand.Execute(this);
         }
@@ -38,5 +49,5 @@ public partial class MainWindow
         Close();
     }
 
-    private MainWindowViewModel? _viewModel;
+    private readonly MainWindowViewModel? _viewModel;
 }

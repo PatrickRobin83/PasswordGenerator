@@ -1,4 +1,15 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿/*
+ * -----------------------------------------------------------------------------
+ *	 
+ *   Filename		:   App.xaml.cs
+ *   Date			:   2024-06-21
+ *   All rights reserved
+ * 
+ * -----------------------------------------------------------------------------
+ * @author Patrick Robin <support@rietrob.de>
+ */
+
+using CommunityToolkit.Mvvm.Messaging;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +25,7 @@ namespace PasswordGenerator;
 /// <summary>
 /// Interaction logic for App.xaml
 /// </summary>
-public partial class App
+public partial class App : Application
 {
     [STAThread]
     private static void Main(string[] args)
@@ -42,12 +53,18 @@ public partial class App
                 => configurationBuilder.AddUserSecrets(typeof(App).Assembly))
             .ConfigureServices((hostContext, services) =>
             {
+                //Views
                 services.AddSingleton<MainWindow>();
+
+                // ViewModels
+                services.AddScoped<BaseViewModel>();
                 services.AddSingleton<MainWindowViewModel>();
 
+                //Messenger
                 services.AddSingleton<WeakReferenceMessenger>();
                 services.AddSingleton<IMessenger, WeakReferenceMessenger>(provider =>
                     provider.GetRequiredService<WeakReferenceMessenger>());
+
 
                 services.AddSingleton(_ => Current.Dispatcher);
 

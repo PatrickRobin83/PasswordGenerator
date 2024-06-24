@@ -1,17 +1,25 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows;
+﻿ /*
+ * -----------------------------------------------------------------------------
+ *	 
+ *   Filename		:   MainWindowViewModel.cs
+ *   Date			:   2024-06-21
+ *   All rights reserved
+ * 
+ * -----------------------------------------------------------------------------
+ * @author Patrick Robin <support@rietrob.de>
+ */
 
+using System.Collections.ObjectModel;
+using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-
 using MaterialDesignThemes.Wpf;
-
 using PasswordGenerator.Models;
 using PasswordGenerator.Services;
 
 namespace PasswordGenerator.ViewModels;
 
-public partial class MainWindowViewModel : ObservableObject
+public partial class MainWindowViewModel : BaseViewModel
 {
     public MainWindowViewModel(ISnackbarMessageQueue messageQueue)
     {
